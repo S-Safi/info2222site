@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Computer Science Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./usyd.jpg">
+</head>
+
+<body>
+    <ul style="position:absolute; left:0; top:0; width:100%;">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="friends.html">Friends</a></li>
+        <li><a href="messaging.html">Messaging</a></li>
+        <li><a href="posts.html">Posts</a></li>
+    </ul>
+    <br>
+    <br>
+    <h1>Computer Science Platform</h1>
+    <div style="text-align:center">
+        <p id="friends"></p>
+        <label for="inputFriend" , id="inputFriendTag">Add a friend: &nbsp;</label>
+        <input type="text" id="inputFriend" name="inputFriend">
+        <button type="button" id="addFriend" onclick="addFriend()">Add</button>
+    </div>
+    <script>
+        window.onload = function onload() {
+            if ((sessionStorage.getItem("account") === null) || (sessionStorage.getItem("loggedIn") == false)) {
+                document.getElementById("friends").innerHTML = "You are not logged in, please log in to view your friends";
+                document.getElementById("inputFriendTag").style.display = "none";
+                document.getElementById("inputFriend").style.display = "none";
+                document.getElementById("addFriend").style.display = "none";
+            } else {
+                name = sessionStorage.getItem("account");
+                friendsList = JSON.parse(localStorage.getItem("friends"));
+                let foundFriends;
+                for (var i = 0; i < friendsList.length; i++) {
+                    tempName = friendsList[i].name;
+                    if (name == tempName) {
+                        foundFriends = friendsList[i].friends;
+                    }
+                }
+                if (foundFriends.length == 0) {
+                    document.getElementById("friends").innerHTML = "You have no friends";
+                } else {
+                    toWrite = foundFriends[0]
+                    for (var i = 1; i < foundFriends.length; i++) {
+                        toWrite = toWrite.concat("<br>", foundFriends[i])
+                    }
+                    document.getElementById("friends").innerHTML = toWrite;
+                }
+            }
+        }
+        function addFriend() {
+            if (!document.getElementById("inputFriend").value) {
+                alert("No Friend Specified");
+            } else {
+                friend = document.getElementById("inputFriend").value;
+                accounts = JSON.parse(localStorage.getItem("accounts"));
+                success = false;
+                for (var i = 0; i < accounts.length; i++) {
+                    account = accounts[i];
+                    if (account[0] == friend) {
+                        success = true;
+                    }
+                }
+                if (friend == sessionStorage.getItem(account)) {
+                    alert("You can't add yourself");
+                }
+                else if (success) {
+                    friendsList = JSON.parse(localStorage.getItem("friends"));
+                    name = sessionStorage.getItem("account");
+                    for (var i = 0; i < friendsList.length; i++) {
+                        tempName = friendsList[i].name;
+                        if (name == tempName) {
+                            friendsList[i].friends.push(friend);
+                        }
+                    }
+                    localStorage.setItem("friends", JSON.stringify(friendsList));
+                    alert("Friend added")
+                } else {
+                    alert("User not found");
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

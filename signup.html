@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Computer Science Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./usyd.jpg">
+</head>
+
+<body>
+    <ul style="position:absolute; left:0; top:0; width:100%;">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="friends.html">Friends</a></li>
+        <li><a href="messaging.html">Messaging</a></li>
+        <li><a href="posts.html">Posts</a></li>
+    </ul>
+    <br>
+    <br>
+    <h1>Computer Science Platform</h1>
+    <img src="./usyd.jpg" style="width:30%;" class="center">
+    <br>
+    <div style="text-align: center;">
+        <h2>Sign Up!</h2>
+        <label for="uname">User name: </label>
+        <input type="text" id="uname" name="uname"><br><br>
+        <label for="pword">Password: &nbsp;</label>
+        <input type="password" id="pword" name="pword"><br><br>
+        <button type="button" onclick="checkSignup()">Sign Up</button>
+    </div>
+    <script>
+        function checkSignup() {
+            if (!document.getElementById("uname").value) {
+                alert("No Username Specified");
+            } else if (!document.getElementById("pword").value) {
+                alert("No Password given");
+            } else {
+                alert("Signed up succesfully");
+                if (localStorage.getItem("accounts") === null) {
+                    localStorage.setItem("accounts", JSON.stringify([[document.getElementById("uname").value, document.getElementById("pword").value]]));
+                } else {
+                    accounts = JSON.parse(localStorage.getItem("accounts"));
+                    accounts.push([document.getElementById("uname").value, document.getElementById("pword").value]);
+                    localStorage.setItem("accounts", JSON.stringify(accounts));
+                }
+                sessionStorage.setItem("loggedIn", true);
+                sessionStorage.setItem("account", document.getElementById("uname").value);
+                let user = {
+                    name: document.getElementById("uname").value,
+                    friends: []
+                };
+                if (localStorage.getItem("friends") === null) {
+                    localStorage.setItem("friends", JSON.stringify([user]));
+                } else {
+                    friendsList = JSON.parse(localStorage.getItem("friends"));
+                    friendsList.push(user);
+                    localStorage.setItem("friends", JSON.stringify(friendsList));
+                }
+                if (localStorage.getItem("messages") === null) {
+                    localStorage.setItem("messages", JSON.stringify([]));
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

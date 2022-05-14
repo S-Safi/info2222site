@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Computer Science Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./usyd.jpg">
+</head>
+
+<body>
+    <ul style="position:absolute; left:0; top:0; width:100%;">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="friends.html">Friends</a></li>
+        <li><a href="messaging.html">Messaging</a></li>
+        <li><a href="posts.html">Posts</a></li>
+    </ul>
+    <br>
+    <br>
+    <h1>Computer Science Platform</h1>
+    <div style="text-align:center">
+        <p id="account"></p>
+        <button type="button" id="logOut" onclick="logOut()">Log Out</button>
+    </div>
+    <script>
+        window.onload = function onload() {
+            if ((sessionStorage.getItem("account") === null) || (sessionStorage.getItem("loggedIn") == false)) {
+                document.getElementById("account").innerHTML = "You are not logged in, please log in to view your account";
+                document.getElementById("logOut").style.display = "none";
+            } else {
+                name = sessionStorage.getItem("account");
+                start = "Hello, ";
+                end = ". This is your account page, not much to see here :)";
+                final = start.concat(name, end);
+                document.getElementById("account").innerHTML = final;
+                document.getElementById("logOut").style.display = "block";
+            }
+        }
+        function logOut() {
+            alert("Logging Out")
+            sessionStorage.setItem("loggedIn", false);
+            sessionStorage.removeItem("account");
+            window.location.href = "./index.html";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Computer Science Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./usyd.jpg">
+</head>
+
+<body>
+    <ul style="position:absolute; left:0; top:0; width:100%;">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="friends.html">Friends</a></li>
+        <li><a href="messaging.html">Messaging</a></li>
+        <li><a href="posts.html">Posts</a></li>
+    </ul>
+    <br>
+    <br>
+    <h1>Computer Science Platform</h1>
+    <img src="./usyd.jpg" style="width:30%;" class="center">
+    <br>
+    <div style="text-align: center;">
+        <h2>Please log in!</h2>
+        <label for="uname">User name: </label>
+        <input type="text" id="uname" name="uname"><br><br>
+        <label for="pword">Password: &nbsp;</label>
+        <input type="password" id="pword" name="pword"><br><br>
+        <button type="button" onclick="checkLogin()">Login</button>
+        <button type="button" onclick="location.href = './signup.html';">Sign Up</button>
+    </div>
+    <script>
+        function checkLogin() {
+            if (!document.getElementById("uname").value) {
+                alert("No Username Specified");
+            } else if (!document.getElementById("pword").value) {
+                alert("No Password given");
+            } else {
+                if (localStorage.getItem("accounts") === null) {
+                    alert("Login Failed, please try again or sign up");
+                } else {
+                    accounts = JSON.parse(localStorage.getItem("accounts"));
+                    success = false;
+                    for (var i = 0; i < accounts.length; i++) {
+                        account = accounts[i];
+                        if ((account[0] == document.getElementById("uname").value) && (account[1] == document.getElementById("pword").value)) {
+                            success = true;
+                        }
+                    }
+                    if (success) {
+                        sessionStorage.setItem("loggedIn", true);
+                        sessionStorage.setItem("account", document.getElementById("uname").value);
+                        alert("Logged in successfully!")
+                    } else {
+                        alert("Login Failed, please try again or sign up");
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Computer Science Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./usyd.jpg">
+</head>
+
+<body>
+    <ul style="position:absolute; left:0; top:0; width:100%;">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="friends.html">Friends</a></li>
+        <li><a href="messaging.html">Messaging</a></li>
+        <li><a href="posts.html">Posts</a></li>
+    </ul>
+    <br>
+    <br>
+    <h1>Computer Science Platform</h1>
+    <div style="text-align:center">
+        <p id="Messages"></p>
+        <label for="inputFriend" , id="inputFriendTag">Friend: &nbsp;</label>
+        <input type="text" id="inputFriend" name="inputFriend">
+        <label for="inputMessage" , id="inputMessageTag">Message: &nbsp;</label>
+        <input type="text" id="inputMessage" name="inputMessage">
+        <button type="button" id="send" onclick="sendMessages()">Send</button>
+    </div>
+    <script>
+        window.onload = function onload() {
+            if ((sessionStorage.getItem("account") === null) || (sessionStorage.getItem("loggedIn") == false)) {
+                document.getElementById("Messages").innerHTML = "You are not logged in, please log in to view your messages";
+                document.getElementById("inputFriendTag").style.display = "none";
+                document.getElementById("inputFriend").style.display = "none";
+                document.getElementById("inputMessageTag").style.display = "none";
+                document.getElementById("inputMessage").style.display = "none";
+                document.getElementById("send").style.display = "none";
+            } else {
+                name = sessionStorage.getItem("account");
+                messageList = JSON.parse(localStorage.getItem("messages"));
+                foundMessages = [];
+                for (var i = 0; i < messageList.length; i++) {
+                    tempMsg = messageList[i];
+                    if (name == tempMsg.reciever) {
+                        foundMessages.push(tempMsg);
+                    }
+                }
+                if (foundMessages.length == 0) {
+                    document.getElementById("Messages").innerHTML = "You have no messages";
+                } else {
+                    toWrite = foundMessages[0].sender + ": " + foundMessages[0].message;
+                    for (var i = 1; i < foundMessages.length; i++) {
+                        toWrite = toWrite + "<br>" + foundMessages[i].sender + ": " + foundMessages[i].message;
+                    }
+                    document.getElementById("Messages").innerHTML = toWrite;
+                }
+            }
+        }
+        function sendMessages() {
+            if (!document.getElementById("inputFriend").value) {
+                alert("No Friend Specified");
+            } else {
+                if (!document.getElementById("inputMessage").value) {
+                    alert("Message empty");
+                } else {
+                    friend = document.getElementById("inputFriend").value;
+                    friendsList = JSON.parse(localStorage.getItem("friends"));
+                    success = false;
+                    for (var i = 0; i < friendsList.length; i++) {
+                        tempName = friendsList[i].name;
+                        if (friend == tempName) {
+                            success = true;
+                        }
+                    }
+                    if (success) {
+                        messageList = JSON.parse(localStorage.getItem("messages"));
+                        name = sessionStorage.getItem("account");
+                        let message = {
+                            sender: name,
+                            reciever: friend,
+                            message: document.getElementById("inputMessage").value
+                        };
+                        messageList.push(message);
+                        localStorage.setItem("messages", JSON.stringify(messageList));
+                        alert("Message Sent")
+                    } else {
+                        alert("User not in friend list");
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

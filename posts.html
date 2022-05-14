@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Computer Science Platform</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./usyd.jpg">
+</head>
+
+<body>
+    <ul style="position:absolute; left:0; top:0; width:100%;">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="aboutus.html">About</a></li>
+        <li><a href="contactus.html">Contact</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="friends.html">Friends</a></li>
+        <li><a href="messaging.html">Messaging</a></li>
+        <li><a href="posts.html">Posts</a></li>
+    </ul>
+    <br>
+    <br>
+    <h1>Computer Science Platform</h1>
+    <div id="posts" style="text-align:center">
+        <h2>Posts</h2>
+        <br>
+        <br>
+        <table style="width:100%">
+            <tbody>
+                <tr>
+                    <th>I have an announcement for you</th>
+                    <th>Help with math</th>
+                    <th>Hello world</th>
+                </tr>
+                <tr>
+                    <td><img src="./unbenchthekench.jpg" style="width:75%;" class="center"></td>
+                    <td><img src="./four.jpg" style="width:75%;" class="center"></td>
+                    <td><img src="./robot.jpg" style="width:75%;" class="center"></td>
+                </tr>
+                <tr>
+                    <td>This is Tahm Kench, but real :0</td>
+                    <td>I cannot count past 4</td>
+                    <td>I am a robot</td>
+                </tr>
+                <tr>
+                    <td>- Bob</td>
+                    <td>- Jhin</td>
+                    <td>- Rob(ot)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        window.onload = function onload() {
+            if ((sessionStorage.getItem("account") === null) || (sessionStorage.getItem("loggedIn") == false)) {
+                document.getElementById("posts").innerHTML = "You are not logged in, please log in to view posts";
+            }
+        }
+    </script>
+</body>
+
+</html>
